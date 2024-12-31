@@ -1,4 +1,4 @@
-const countryCard = ({ flagImg, name }) => {
+const CountryCard = ({ flagImg, name }) => {
   return (
     <div
       className="countryCard"
@@ -28,4 +28,4 @@ const countryCard = ({ flagImg, name }) => {
   );
 };
 
-export default countryCard;
+export default CountryCard;
