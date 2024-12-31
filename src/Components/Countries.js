@@ -4,21 +4,30 @@ import CountryCard from "./CountryCard";
 const Countries = () => {
   const API_URL =
     "https://0b9f457a-c7f4-4a28-9f68-2fe10314cedd.mock.pstmn.io/crio";
+
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(null); // State to track API errors
+  const [loading, setLoading] = useState(true); // State to track loading status
 
   useEffect(() => {
     fetch(API_URL)
-      .then((res) => res.json())
-      .then((data) => setCountries(data))
-      .catch((error) => console.error("Error fetching data:" + error));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setCountries(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setError("Failed to load country data. Please try again later.");
+        setLoading(false);
+      });
   }, []);
-
-  // const filteredCountries = countries.filter((country) => {
-  //   const countryName = country.name?.toLowerCase().trim(); // Safeguard against undefined or extra spaces
-  //   const search = searchTerm.toLowerCase().trim();
-  //   return countryName.includes(search); // Strict substring matching
-  // });
 
   const filteredCountries = countries.filter((country) =>
     country.common.toLowerCase().includes(searchTerm.toLowerCase())
@@ -40,6 +49,13 @@ const Countries = () => {
           borderRadius: "8px",
         }}
       />
+
+      {/* Display loading state */}
+      {loading && <p style={{ textAlign: "center" }}>Loading countries...</p>}
+
+      {/* Display error message if API fails */}
+      {error && <p style={{ textAlign: "center", color: "red" }}>{error}</p>}
+
       <div
         style={{
           display: "grid",
@@ -49,25 +65,25 @@ const Countries = () => {
           padding: "20px",
         }}
       >
-        {filteredCountries.length > 0 ? (
-          filteredCountries.map((country, index) => (
-            <CountryCard
-              name={country.common}
-              flagImg={country.png}
-              key={index}
-            />
-          ))
-        ) : (
-          <p
-            style={{
-              gridColumn: "1 / -1",
-              textAlign: "center",
-            }}
-          >
-            {" "}
-            No countries found
-          </p>
-        )}
+        {!loading && !error && filteredCountries.length > 0
+          ? filteredCountries.map((country, index) => (
+              <CountryCard
+                name={country.common}
+                flagImg={country.png}
+                key={index}
+              />
+            ))
+          : !loading &&
+            !error && (
+              <p
+                style={{
+                  gridColumn: "1 / -1",
+                  textAlign: "center",
+                }}
+              >
+                No countries found
+              </p>
+            )}
       </div>
     </div>
   );
