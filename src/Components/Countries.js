@@ -14,11 +14,15 @@ const Countries = () => {
       .catch((error) => console.error("Error fetching data:" + error));
   }, []);
 
-  const filteredCountries = countries.filter((country) => {
-    const countryName = country.name?.toLowerCase().trim(); // Safeguard against undefined or extra spaces
-    const search = searchTerm.toLowerCase().trim();
-    return countryName.includes(search); // Strict substring matching
-  });
+  // const filteredCountries = countries.filter((country) => {
+  //   const countryName = country.name?.toLowerCase().trim(); // Safeguard against undefined or extra spaces
+  //   const search = searchTerm.toLowerCase().trim();
+  //   return countryName.includes(search); // Strict substring matching
+  // });
+
+  const filteredCountries = countries.filter((country) =>
+    country.common.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div>
@@ -46,11 +50,11 @@ const Countries = () => {
         }}
       >
         {filteredCountries.length > 0 ? (
-          filteredCountries.map((country) => (
+          filteredCountries.map((country, index) => (
             <CountryCard
-              name={country.name}
-              flagURL={country.flag}
-              key={country.abbr}
+              name={country.common}
+              flagImg={country.png}
+              key={index}
             />
           ))
         ) : (
