@@ -10,10 +10,7 @@ const Countries = () => {
   useEffect(() => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setCountries(data);
-      })
+      .then((data) => setCountries(data))
       .catch((error) => console.error("Error fetching data:" + error));
   }, []);
 
