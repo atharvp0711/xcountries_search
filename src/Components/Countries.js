@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CountryCard from "./countryCard";
+import CountryCard from "./CountryCard";
 
 const Countries = () => {
   const API_URL =
@@ -10,7 +10,10 @@ const Countries = () => {
   useEffect(() => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((data) => setCountries(data))
+      .then((data) => {
+        console.log(data);
+        setCountries(data);
+      })
       .catch((error) => console.error("Error fetching data:" + error));
   }, []);
 
