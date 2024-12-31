@@ -1,4 +1,4 @@
-const CountryCard = ({ flagImg, name }) => {
+const countryCard = ({ flagImg, name }) => {
   return (
     <div
       style={{
@@ -27,4 +27,4 @@ const CountryCard = ({ flagImg, name }) => {
   );
 };
 
-export default CountryCard;
+export default countryCard;

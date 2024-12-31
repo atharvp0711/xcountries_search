@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CountryCard from "./CountryCard";
+import CountryCard from "./countryCard";
 
 const Countries = () => {
   const API_URL =
