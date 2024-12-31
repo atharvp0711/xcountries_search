@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import CountryCard from "./CountryCard";
 
 const Countries = () => {
-  const API_URL = "https://xcountries-backend.azurewebsites.net/all";
+  const API_URL =
+    "https://0b9f457a-c7f4-4a28-9f68-2fe10314cedd.mock.pstmn.io/crio";
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
